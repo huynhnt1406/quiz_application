@@ -1,0 +1,165 @@
+MVC Model
+
+
+View  :includes HTML,CSS
+Model : tuong tac de lay du lieu tu database
+Controller:
+
+Browser Dispatcher
+	Routes
+	Web Server
+
+Routes & Controllers
+
+
+
+http://rest.learncode.academy/api/vue-5/
+
+
+
+
+Bootstrap VueJS
+
+npm i vue bootstrap-vue bootstrap
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+
+imporrt BootstrapVue from 'bootstrap-vue'
+
+
+Vue.use(BootstrapVue)
+<Header :numTotal ="numTotal" :numCorrect="numCorrect"/>
+	props:{
+		numTotal:Number,
+		numCorrect:Number
+	}
+.....Header.vue.....
+
+tranfer Object data from parent component to child component
+
+App.vue
+	can use index of APi to render each question of the list
+	data(){
+		return {
+
+			questions:[]
+			index: 0,
+			numCorrect:0,
+			numTotal: 0
+		}
+	},
+	methods : {
+		next(){
+			this.index ++
+
+		},
+		increment(isCorrect){
+			if(isCorrect){
+				this.numCorrect++					
+			}
+			this.numTotal++
+		
+		}
+					
+	}
+	mounted(){
+		fetch('https://opentdb.com/api.php?amount=10&category=28&difficulty=medium', {
+			method: 'GET'
+		}
+		).then((res) => res.json())
+		 .then(data => this.questions = res.data)
+	}
+	__<QuestionBox 
+		v-if = "question.length"
+		:currentQuestion = questions[index]
+		:next = "next"
+	/>
+
+	contain
+	<button @click=next()>Next</button>
+	<button @click=previous()>Previous</button>
+
+<---end app.vue --->
+Questionbox.vue
+	props: {
+		currentQuestion:Qbject,
+		next:Function
+		increment:Function
+	}
+	<h3>{{currentQuestion.question}}</h3>
+
+	:class = "[selectIndex === index ? 'selected' : '']"
+
+
+/// this function throw error because 
+
+
+//lodash
+	import _ from 'lodash'
+		//xu li truong answers.
+       computed : {
+		answers(){
+			let answers = [...this.currentQuestion.incorrect_answers]
+			answers.push(this.currentQuestion.correct_answer)
+			return answers 
+		}
+	}
+	
+	watch(){
+		currentQuestion(){
+			this.selectIndex = null;
+			this.shuffleAnswer()				
+		}
+	},
+	methods : {
+		selectAnswer() {
+			this.selectIndex = index
+		},
+		shuffleAnswer(){
+			let answers = [...this.currentQuestion.incorrect_answers,this.currentQuestion.correct_answers ]
+			this.shuffleAnswer() = _.shuffle(answer)	
+		},
+		submitAnswer(){
+			let isCorrect = false
+			if(selectIndex === correctIndex){
+				isCorrect = true	
+			}
+			this.increment(isCorrect)
+		}
+	},
+	mounted(){
+		this.shuffleAnswers()
+	}
+
+
+
+	//:disable = "selectedIndex === null"
+
+
+	<button @click = "submitAnswer">Submit</button>
+
+
+	
+	
+
+	
+	
+
+
+
+
+
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
