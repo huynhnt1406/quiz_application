@@ -51,7 +51,7 @@ export default {
     }
   },
   async mounted(){
-     const res =  await fetch('https://opentdb.com/api.php?amount=20&category=21&difficulty=easy')
+     const res =  await fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=hard')
      const respData = await res.json()
      this.questions = respData.results
   }
