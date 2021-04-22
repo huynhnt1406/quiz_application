@@ -54,7 +54,6 @@ export default {
      const res =  await fetch('https://opentdb.com/api.php?amount=20&category=21&difficulty=easy')
      const respData = await res.json()
      this.questions = respData.results
-     console.log(this.questions)
   }
 }
 </script>
